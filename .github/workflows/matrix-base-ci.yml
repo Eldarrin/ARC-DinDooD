@@ -30,7 +30,7 @@ jobs:
       matrix:
         runner-name: ["main", "dind-swarm"]
 
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -48,7 +48,7 @@ jobs:
       matrix:
         runner-name: ["buildah", "kube", "docker"]
 
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -65,7 +65,7 @@ jobs:
       matrix:
         runner-name: ["maven"]
 
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -79,7 +79,7 @@ jobs:
   ci-bases:
     needs: pre-build
 
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -96,7 +96,7 @@ jobs:
       matrix:
         runner-name:  ["main", "azure", "buildah", "dotnet50", "dotnet60", "kube", "node12", "node14", "python39", "maven", "octopus", "sfdx", "helm", "docker"]
 
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -126,7 +126,7 @@ jobs:
       matrix:
         runner-name:  ["main", "buildah", "maven", "docker"]
 
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
 
     steps:
       - name: download the ${{ matrix.runner-name }} manifests
@@ -147,7 +147,7 @@ jobs:
   cleanup-docker:
     needs: deploy-runner
 
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Show images
@@ -163,7 +163,7 @@ jobs:
     strategy:
       matrix:
         runner-name:  ["dind-swarm"]
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
 
     steps:
       - name: download the ${{ matrix.runner-name }} manifests
@@ -192,7 +192,7 @@ jobs:
       matrix:
         runner-name:  ["kube"]
 
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
 
     steps:
       - name: download the ${{ matrix.runner-name }} manifests
