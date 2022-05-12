@@ -30,7 +30,7 @@ jobs:
       matrix:
         runner-name: ["main", "dind-swarm"]
 
-    runs-on: [docker]
+    runs-on: [ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v3
@@ -38,6 +38,7 @@ jobs:
         run: |
           cd bases/${{ matrix.runner-name }}
           sed -i "s/LATESTTAG/${{ env.TAG }}/g" Dockerfile
+          docker login -u {{ secret.DOCKER_USER }} -p {{ secret.DOCKER_PASSWORD }}
           docker build -t eldarrin/bases/${{ matrix.runner-name }}:${{ env.TAG }} .
           docker push eldarrin/bases/${{ matrix.runner-name }}:${{ env.TAG }}
 
@@ -47,7 +48,7 @@ jobs:
       matrix:
         runner-name: ["buildah", "kube", "docker"]
 
-    runs-on: [docker]
+    runs-on: [ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v3
@@ -64,7 +65,7 @@ jobs:
       matrix:
         runner-name: ["maven"]
 
-    runs-on: [docker]
+    runs-on: [ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v3
@@ -78,7 +79,7 @@ jobs:
   ci-bases:
     needs: pre-build
 
-    runs-on: [main]
+    runs-on: [ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v3
@@ -95,7 +96,7 @@ jobs:
       matrix:
         runner-name:  ["main", "azure", "buildah", "dotnet50", "dotnet60", "kube", "node12", "node14", "python39", "maven", "octopus", "sfdx", "helm", "docker"]
 
-    runs-on: [docker]
+    runs-on: [ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v3
@@ -125,7 +126,7 @@ jobs:
       matrix:
         runner-name:  ["main", "buildah", "maven", "docker"]
 
-    runs-on: [kubectl]
+    runs-on: [ubuntu-latest]
 
     steps:
       - name: download the ${{ matrix.runner-name }} manifests
@@ -146,7 +147,7 @@ jobs:
   cleanup-docker:
     needs: deploy-runner
 
-    runs-on: [docker]
+    runs-on: [ubuntu-latest]
 
     steps:
       - name: Show images
@@ -162,7 +163,7 @@ jobs:
     strategy:
       matrix:
         runner-name:  ["dind-swarm"]
-    runs-on: [kubectl]
+    runs-on: [ubuntu-latest]
 
     steps:
       - name: download the ${{ matrix.runner-name }} manifests
@@ -191,7 +192,7 @@ jobs:
       matrix:
         runner-name:  ["kube"]
 
-    runs-on: [kubectl]
+    runs-on: [ubuntu-latest]
 
     steps:
       - name: download the ${{ matrix.runner-name }} manifests
