@@ -2,7 +2,7 @@ name: Full Runner Build
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ main, develop ]
   pull_request:
     branches: [ main ]
 
