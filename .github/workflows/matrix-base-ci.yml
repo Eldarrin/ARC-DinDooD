@@ -38,7 +38,7 @@ jobs:
         run: |
           cd bases/${{ matrix.runner-name }}
           sed -i "s/LATESTTAG/${{ env.TAG }}/g" Dockerfile
-          docker login -u {{ secrets.DOCKER_USER }} -p {{ secrets.DOCKER_PASSWORD }}
+          echo "{{ secrets.DOCKER_PASSWORD }}" | docker login -u "{{ secrets.DOCKER_USER }}" --password-stdin
           docker build -t eldarrin/bases/${{ matrix.runner-name }}:${{ env.TAG }} .
           docker push eldarrin/bases/${{ matrix.runner-name }}:${{ env.TAG }}
 
