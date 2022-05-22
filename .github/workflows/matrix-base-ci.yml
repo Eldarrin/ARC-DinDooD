@@ -146,7 +146,7 @@ jobs:
           kubectl apply -f ${{ matrix.runner-name }}-hra.yaml -n gitfarm
 
   deploy-bases:
-    needs: deploy-bases
+    needs: deploy-runner
     strategy:
       matrix:
         runner-name:  ["dind-swarm"]
