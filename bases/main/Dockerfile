@@ -1,4 +1,4 @@
-FROM ubi8/ubi-minimal:8.5-240.1648458092
+FROM registry.access.redhat.com/ubi8/ubi:8.6-754
 COPY yum.repos.d /etc/yum.repos.d/
 
 ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.332.b09-1.el8_5.x86_64
