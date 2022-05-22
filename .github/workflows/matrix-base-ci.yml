@@ -39,7 +39,7 @@ jobs:
           cd bases/${{ matrix.runner-name }}
           printenv
           sed -i "s/LATESTTAG/${{ env.TAG }}/g" Dockerfile
-          echo "{{ secrets.DOCKER_PASSWORD }}" | docker login -u "{{ secrets.DOCKER_USER }}"
+          echo "{{ secrets.DOCKER_PASSWORD }}" | docker login -u "{{ secrets.DOCKER_USER }}" --password-stdin
           docker build -t eldarrin/bases/${{ matrix.runner-name }}:${{ env.TAG }} .
           docker push eldarrin/bases/${{ matrix.runner-name }}:${{ env.TAG }}
 
