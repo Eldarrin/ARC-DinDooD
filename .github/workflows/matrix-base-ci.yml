@@ -40,8 +40,8 @@ jobs:
           printenv
           sed -i "s/LATESTTAG/${{ env.TAG }}/g" Dockerfile
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin
-          docker build -t eldarrin/bases/${{ matrix.runner-name }}:${{ env.TAG }} .
-          docker push eldarrin/bases/${{ matrix.runner-name }}:${{ env.TAG }}
+          docker build -t eldarrin/base-${{ matrix.runner-name }}:${{ env.TAG }} .
+          docker push eldarrin/base-${{ matrix.runner-name }}:${{ env.TAG }}
 
   primary-build:
     needs: pre-build
@@ -57,8 +57,8 @@ jobs:
         run: |
           cd bases/${{ matrix.runner-name }}
           sed -i "s/LATESTTAG/${{ env.TAG }}/g" Dockerfile
-          docker build -t eldarrin/bases/${{ matrix.runner-name }}:${{ env.TAG }} .
-          docker push eldarrin/bases/${{ matrix.runner-name }}:${{ env.TAG }}
+          docker build -t eldarrin/base-${{ matrix.runner-name }}:${{ env.TAG }} .
+          docker push eldarrin/base-${{ matrix.runner-name }}:${{ env.TAG }}
 
   secondary-build:
     needs: primary-build
@@ -74,8 +74,8 @@ jobs:
         run: |
           cd bases/${{ matrix.runner-name }}
           sed -i "s/LATESTTAG/${{ env.TAG }}/g" Dockerfile
-          docker build -t eldarrin/bases/${{ matrix.runner-name }}:${{ env.TAG }} .
-          docker push eldarrin/bases/${{ matrix.runner-name }}:${{ env.TAG }}
+          docker build -t eldarrin/base-${{ matrix.runner-name }}:${{ env.TAG }} .
+          docker push eldarrin/base-${{ matrix.runner-name }}:${{ env.TAG }}
 
   ci-bases:
     needs: pre-build
@@ -106,8 +106,8 @@ jobs:
           cd gitrunners
           sed -i "s/BASEBUILD/${{ matrix.runner-name }}/g" Dockerfile
           sed -i "s/LATESTTAG/${{ env.TAG }}/g" Dockerfile
-          docker build -t eldarrin/gitrunners/${{ matrix.runner-name }}:${{ env.TAG }} .
-          docker push eldarrin/gitrunners/${{ matrix.runner-name }}:${{ env.TAG }}
+          docker build -t eldarrin/gitrunner-${{ matrix.runner-name }}:${{ env.TAG }} .
+          docker push eldarrin/gitrunner-${{ matrix.runner-name }}:${{ env.TAG }}
 
       - name: create and push manifests
         run: |
@@ -144,20 +144,6 @@ jobs:
         run: |
           kubectl apply -f ${{ matrix.runner-name }}-runnerdeployment.yaml -n gitfarm
           kubectl apply -f ${{ matrix.runner-name }}-hra.yaml -n gitfarm
-
-  cleanup-docker:
-    needs: deploy-runner
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Show images
-        run: |
-          docker images -a
-
-      - name: cleanup the cluster's old images
-        run: |
-          docker rmi $(docker images -aq) || true
 
   deploy-bases:
     needs: cleanup-docker
