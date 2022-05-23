@@ -1,4 +1,4 @@
-FROM eldarrin/bases/main:LATESTTAG
+FROM eldarrin/base-main:LATESTTAG
 
 RUN microdnf -y install yum
 

@@ -1,4 +1,4 @@
-FROM eldarrin/bases/main:LATESTTAG
+FROM eldarrin/base-main:LATESTTAG
 
 COPY yum.repos.d /etc/yum.repos.d/
 
