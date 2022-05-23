@@ -1,6 +1,6 @@
 FROM eldarrin/base-main:LATESTTAG
 
-RUN microdnf -y install yum
+RUN dnf -y install yum
 
 RUN useradd build; yum -y update; rpm --restore shadow-utils 2>/dev/null; yum -y install cpp buildah fuse-overlayfs xz --exclude container-selinux; rm -rf /var/cache /var/log/dnf* /var/log/yum.*;
 
